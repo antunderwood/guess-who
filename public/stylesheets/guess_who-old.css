@@ -1,0 +1,153 @@
+body {
+	font-family: Helvetica, Arial, sans-serif;
+}
+
+div.card  {
+  width:79px;
+  height:101px;
+}
+
+div.card img {
+  width:100%;
+  height:100%;
+}
+
+div#notice {
+	background: #FFF6BF;
+	border-top: 2px solid #FFD324;
+	border-bottom: 2px solid #FFD324;
+	border-left: 2px solid #FFD324;
+	border-right: 2px solid #FFD324;
+	text-align: center;
+	margin: 10px auto;
+	padding: 5px 20px;
+}
+div#container
+{
+	position:absolute;
+	top: 0px;
+	left: 10px;
+	width:400px;
+	padding:25px 10px 25px 20px;
+	font-size:0.9em;
+	font-family:arial, sans serif;
+	background-color:#212121;
+	color:#FFFFFF;
+	text-align:left;
+	height:92%;
+	overflow: hidden;
+}
+.red {
+	background-color:#FF0000
+}
+.blue {
+	background-color:#0000FF
+}
+
+/* set the image to use and establish the lower-right position */ 
+.cssbox-red, .cssbox_body-red, .cssbox_head-red, .cssbox_head-red h2 {
+    background: transparent url(../images/Red-Box.png) no-repeat bottom right; 
+} 
+.cssbox-red { 
+    width: 320px !important; /* intended total box width - padding-right(next) */
+    width: 320px; /* IE Win = width - padding */
+    padding-right: 15px; /* the gap on the right edge of the image (not content padding) */
+    margin: 5px auto; /* use to position the box */ 
+} 
+
+/* set the top-right image */ 
+.cssbox_head-red { 
+    background-position: top right; margin-right: -15px; /* pull the right image over on top of border */
+    padding-right: 15px; /* right-image-gap + right-inside padding */ 
+} 
+
+/* set the top-left image */ 
+.cssbox_head-red h2 { 
+    background-position: top left; 
+    margin: 0; /* reset main site styles*/ 
+    border: 0; /* ditto */ 
+    padding: 25px 0 15px 15px; /* padding-left = image gap + interior padding ... no padding-right */ 
+    height: auto !important; height: 1%; /* IE Holly Hack */ 
+} 
+
+/* set the lower-left corner image */ 
+.cssbox_body-red { 
+    background-position: bottom left; 
+    margin-right:0px; /* interior-padding right */ 
+    padding: 15px 0 15px 15px; /* mirror .cssbox_head right/left */ 
+}
+
+
+.cssbox-blue, .cssbox_body-blue, .cssbox_head-blue, .cssbox_head-blue h2 {
+    background: transparent url(../images/Blue-Box.png) no-repeat bottom right; 
+} 
+.cssbox-blue { 
+    width: 320px !important; /* intended total box width - padding-right(next) */
+    width: 320px; /* IE Win = width - padding */
+    padding-right: 15px; /* the gap on the right edge of the image (not content padding) */
+    margin: 5px auto; /* use to position the box */ 
+} 
+
+/* set the top-right image */ 
+.cssbox_head-blue { 
+    background-position: top right; margin-right: -15px; /* pull the right image over on top of border */
+    padding-right: 15px; /* right-image-gap + right-inside padding */ 
+} 
+
+/* set the top-left image */ 
+.cssbox_head-blue h2 { 
+    background-position: top left; 
+    margin: 0; /* reset main site styles*/ 
+    border: 0; /* ditto */ 
+    padding: 25px 0 15px 15px; /* padding-left = image gap + interior padding ... no padding-right */ 
+    height: auto !important; height: 1%; /* IE Holly Hack */ 
+} 
+
+/* set the lower-left corner image */ 
+.cssbox_body-blue { 
+    background-position: bottom left; 
+    margin-right:0px; /* interior-padding right */ 
+    padding: 15px 0 15px 15px; /* mirror .cssbox_head right/left */ 
+}
+
+
+
+/* Styles for scrolling layers and scrollbars  */
+
+div#wn1  { 
+  position:absolute; left:0; top:0;
+  width:350px; height:100%; 
+
+  overflow:hidden; z-index:1
+  }
+/* op7 needs width set here too (?) */  
+/*div#lyr1 { width:220px }*/
+div.content { 
+  position:absolute; visibility:hidden; 
+  left:0; top:0; z-index:1;
+}
+
+/* Set small font-size or size/position of div's will be off in some browsers  */
+div#scrollbar1 { 
+  position:absolute; visibility:hidden;
+  right:5px; top:0;
+  width:16px; height:99%; 
+  font-size:1px; z-index:2;
+  }
+div#scrollbar1 {
+  border: 0 none;
+}
+div#track1 { 
+  position:absolute; left:0px; top:18px;
+  width:16px; height:95%;
+  background: url("../images/middle.png") repeat;
+  z-index:1
+  }
+div#dragBar1 {
+  position:absolute; left:1px; top:1px;
+  width:14px; height:20px;
+  background-color:#ffffff;
+  z-index:1
+  }  
+div#up1 { position:absolute; left:0; top:0; z-index:2 }  
+div#down1 { position:absolute; left:0; bottom:0; z-index:3 }

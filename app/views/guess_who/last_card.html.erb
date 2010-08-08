@@ -1,0 +1,21 @@
+<table border="0" cellspacing="10">
+<tr>
+	<td>
+		The last card is<br>
+		<img src="images/<%= params['last_card'] %>.png", height="204" width="154" border="0">
+	</td>
+	<td valign="top">
+		Would you like to ask if this is correct?<br>
+		<div id="yesLastCardButton">
+			<%=link_to_remote("Yes", :update => "returnedXML", :url => { :action => "submit_last_card"}, :with => "'last_card=" + params['last_card'] + "'", :complete => 'process_messages_returned();')%>
+		</div>
+		<div id="noLastCardButton"><a href="#" onclick="TB_remove();">No</a></div>
+	</td>
+</tr>
+<tr>
+	<td align="center">
+		<b><%= @name_hash[params['last_card']] %></b><br>
+	</td>
+	<td>&nbsp;</td>
+</tr>
+</table>

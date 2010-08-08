@@ -1,0 +1,30 @@
+<% if params[:result] == "correct_choice" %>
+	You chose the correct alien
+	<div id="result_message">
+		You are the Winner!
+	</div>
+<% elsif params[:result] == "incorrect_choice" %>
+	You chose the incorrect alien
+	<div id="result_message">
+		<%= @otherPlayerName %> is the Winner!
+	</div>
+<% elsif params[:result] == "other_player_correct_choice" %>
+	<%= @otherPlayerName %> chose <%= @alien %>&nbsp;<%= image_tag(@card + ".png") %>
+	<div id="result_message">
+		<%= @otherPlayerName %> is the Winner!
+	</div>
+<% elsif params[:result] == "other_player_incorrect_choice" %>
+	<%= @otherPlayerName %> chose <%= @alien %>&nbsp;<%= image_tag(@card + ".png") %>
+	<div id="result_message">
+		You are the Winner!
+	</div>
+<% end %>
+<br>
+Do you want to play again?
+<br>
+<div id="yesLastCardButton">
+	<%=link_to_remote("Yes", :update => "returnedXML", :url => { :action => "play_again"}, :complete => 'process_messages_returned();TB_remove();')%>
+</div>
+<div id="noLastCardButton">
+	<%=link_to_remote("No", :update => "returnedXML", :url => { :action => "dont_play_again"}, :complete => 'process_messages_returned();TB_remove();')%>
+</div>

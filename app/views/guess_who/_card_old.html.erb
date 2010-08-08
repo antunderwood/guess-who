@@ -1,0 +1,5 @@
+<% column_counter=-1%>
+<% card.each do |column|-%>
+<% column_counter+=1%>
+<div class="card" id="div-<%=column+(card_counter+1).to_s%>" style="position: absolute; top: <%=80 + (card_counter*123)%>px;left:<%= 30+(column_counter*90)%>px;" onclick="new Effect.Scale('div-<%=column+(card_counter+1).to_s%>', 0,{ scaleX:false,scaleY:true,scaleFromCenter:true,scaleMode: { originalHeight: 100, originalWidth: 75 },duration:0.25});setTimeout(function(){ImageToggle('image-<%=column+(card_counter+1).to_s%>','images/alien.jpg','images/eliminated.jpg');},250);setTimeout(function(){ new Effect.Scale('div-<%=column+(card_counter+1).to_s%>', 100000,{ scaleX:false,scaleY:true,scaleFromCenter:true,scaleMode: { originalHeight: 0.1, originalWidth: 75 },duration:0.25,scaleFrom:0});},260);"><%= image_tag("alien.jpg", :id=>'image-'+column+(card_counter+1).to_s) %></div>
+<%end-%>

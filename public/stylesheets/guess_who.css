@@ -1,0 +1,204 @@
+body {
+	font-family: Helvetica, Arial, sans-serif;
+	background-color:#212121;
+	color: #FFFFFF;
+}
+div#top_image {
+	margin: 10px auto;
+	padding: 5px 20px;
+}
+div.card  {
+  width:77px;
+  height:100px;
+}
+div.card_name  {
+  width:77px;
+  text-align: center;
+}
+
+div.card img {
+  width:100%;
+  height:100%;
+}
+
+div.card_choice {
+  width:77px;
+  height:120px;
+  background: #ff0000;
+  padding: 5px;
+  text-align: center
+}
+
+div#question_send_area{
+	position:absolute; top: 590px; left:30px;
+	width:  550px;
+}
+span.question{
+	color: #34A12E;
+	font-size:  120%;
+}
+div.button{
+	margin :  5px 10px 5px 0;
+	padding: 0 5px 0 5px;
+	height:  33px;
+	line-height:  33px;;
+	background:  url("../images/question_button.png");
+	background-repeat:  repeat-x;
+	color:#FFFFFF;
+	border: 2px solid #313131;
+	float:  left;
+	vertical-align: middle;
+}
+
+
+
+div#container
+{
+	position:absolute;
+	top: 15px;
+	left: 600px;
+	width:350px;
+	padding:25px 10px 25px 20px;
+	font-size:0.9em;
+	font-family:arial, sans serif;
+	background-color:#AAAAAA;
+	color:#FFFFFF;
+	text-align:left;
+	height:515px;
+	overflow: hidden;
+}
+
+/* Styles for scrolling layers and scrollbars  */
+
+div#wn1  { 
+  position:absolute; left:0; top:0;
+  width:350px; height:100%; 
+
+  overflow:hidden; z-index:1
+  }
+/* op7 needs width set here too (?) */  
+/*div#lyr1 { width:220px }*/
+div.content
+{
+	position:absolute;
+}
+/* Set small font-size or size/position of div's will be off in some browsers  */
+div#scrollbar1 { 
+  position:absolute; visibility:hidden;
+  right:5px; top:0;
+  width:16px; height:100%; 
+  font-size:1px; z-index:2
+  }
+div#track1 { 
+  position:absolute; left:0; top:18px;
+  width:16px; height:530px;
+  background: url("../images/middle.png") repeat;
+  z-index:1
+  }
+div#dragBar1 {
+  position:absolute; right:1px; top:1px;
+  width:14px; height:20px;
+  background-color:#ffffff;
+  z-index:1
+  }  
+div#up1 { position:absolute; left:0; top:0; z-index:2 }  
+div#down1 { position:absolute; left:0; bottom:0; z-index:3 }
+
+/* set the image to use and establish the lower-right position */ 
+.cssbox-red, .cssbox_body-red, .cssbox_head-red, .cssbox_head-red h2 {
+    background: transparent url(../images/Red-Box.png) no-repeat bottom right; 
+}
+.cssbox-blue, .cssbox_body-blue, .cssbox_head-blue, .cssbox_head-blue h2 {
+    background: transparent url(../images/Blue-Box.png) no-repeat bottom right; 
+}
+
+.cssbox-red, .cssbox-blue{ 
+    width: 315px !important; /* intended total box width - padding-right(next) */
+    width: 300px; /* IE Win = width - padding */
+    padding-right: 15px; /* the gap on the right edge of the image (not content padding) */
+    margin-left: 15px; /* use to position the box */ 
+	margin-bottom: 10px;
+} 
+
+/* set the top-right image */ 
+.cssbox_head-red, .cssbox_head-blue{ 
+    background-position: top right; margin-right: -15px; /* pull the right image over on top of border */
+    padding-right: 15px; /* right-image-gap + right-inside padding */ 
+} 
+
+/* set the top-left image */ 
+.cssbox_head-red h2,.cssbox_head-blue h2 { 
+    background-position: top left; 
+    margin: 0; /* reset main site styles*/ 
+    border: 0; /* ditto */ 
+    padding: 5px 0 2px 15px; /* padding-left = image gap + interior padding ... no padding-right */ 
+    height: auto !important; height: 1%; /* IE Holly Hack */ 
+} 
+
+/* set the lower-left corner image */ 
+.cssbox_body-red, .cssbox_body-blue { 
+    background-position: bottom left; 
+    margin-right:0px; /* interior-padding right */ 
+    padding: 15px 0 15px 15px; /* mirror .cssbox_head right/left */ 
+}
+
+
+
+div#message_response_notice_area{
+	position:absolute; top: 590px; left:600px;
+	width:  375px;
+	font-size: 0.9em;
+	font-family:arial, sans serif;
+}
+div#notice {
+	background: #FFF6BF;
+	border: 2px solid #FFD324;
+	text-align: center;
+	padding: 5px 20px;
+	margin:  0 0 10px 0;
+	color: #000000;
+}
+div#responseButtons{
+	margin-top: 10px;
+	margin-bottom: 10px;
+
+}
+div#yesButton, div#noButton, div#yesLastCardButton, div#noLastCardButton{
+	margin :  0px 10px 5px 0;
+	padding: 0 20px 0 20px;
+	height:  33px;
+	line-height:  33px;
+	background-repeat:  repeat-x;
+	color:#FFFFFF;
+	border: 2px solid #313131;
+	float:  left;
+	vertical-align: middle;
+	font-size:  120%;
+	color: #FFFFFF;
+	text-decoration:  none;
+}
+div#noButton, div#noLastCardButton{
+	background:  url("../images/no_button.png");
+}
+div#yesButton, div#yesLastCardButton{
+	background:  url("../images/yes_button.png");
+}
+#noButton a, #yesButton a, #yesLastCardButton a, #noLastCardButton a{
+	font-size:  120%;
+	color: #FFFFFF;
+	text-decoration:  none;
+}
+
+#yesLastCardButton a:link, #noLastCardButton a:link , #yesLastCardButton a:visited, #noLastCardButton a:visited , #yesLastCardButton a:hover, #noLastCardButton a:hover , #yesLastCardButton a:active, #noLastCardButton a:active , #yesLastCardButton a:focus, #noLastCardButton a:focus {
+	color: #FFFFFF;
+}
+div#result_message{
+	background:  url("../images/yes_button.png");
+	font-size:  200%;
+	font-weight:  bold;
+	color: #FFFFFF;
+	text-align:  center;
+	line-height:  33px;
+	vertical-align: middle;
+	height:  33px;
+}

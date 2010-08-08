@@ -1,0 +1,35 @@
+
+<body> 
+	<% if flash[:notice] -%> 
+		<div id="notice"><%= flash[:notice] %></div> 
+	<% end -%> 
+	<%= form_tag :action => "signin" %> 
+	<table>
+		<tr>
+			<td><label for="name">Real Name:</label></td> 
+			<td><%= text_field_tag "name" %></td>
+		</tr>
+		<tr>
+			<td><label for="username">Username:</label></td> 
+			<td><%= text_field_tag "username" %></td>
+		</tr>
+		<tr>
+			<td><label for="password">Password:</label></td> 
+			<td><%= password_field_tag "password" %></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td> 
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td><label for="player2_name">Player 2 name:</label></td> 
+			<td><%= text_field_tag "player2_name" %></td>
+		</tr>
+		<tr>
+			<td><label for="first_turn">Which Player will have the first turn?</label></td> 
+			<td><%= select_tag "first_turn", options_for_select(['1', '2']) %></td>
+		</tr>
+	</table>
+	<%= submit_tag "Sign in" %> 
+	</form> 
+</body> 

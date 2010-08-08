@@ -1,0 +1,68 @@
+<body onload="initScrollLayers();deactivateQuestionButtons();deactivateResponseButtons();deactivateChatButton();">
+		 <!-- Top Image-->
+	<div id="top_image">
+		<img src="images/guess_who.png"/>
+	</div>
+	 <!-- Cards -->
+	<%= render :partial => "card", :collection => @columns%>
+	<div class="card_choice" id="div-<%=@card_choice%>" style="position: absolute; top: <%=80 + (3*123)%>px;left:<%= 30+(5*90)%>px;"><%= image_tag(@card_choice+".png", :size=>'77x100', :id=>'image-'+@card_choice)%><br><%= @name_hash[@card_choice] %></div>
+	
+	 <!-- message_send_area-->
+		<%= form_remote_tag :url => { :action => 'submit_question' }, :html => {:name => 'form1', :id => 'form1'}, :update => 'returnedXML',:complete => 'clearQuestion();process_messages_returned();'%>
+	<div id="question_send_area">
+		<!-- make periodic call -->
+		<%= periodically_call_remote(:update => 'returnedXML',:frequency => 5, :url => { :action => 'periodic_update'}, :with => "'cardState='+$F('cardState')+'&gameState='+$F('gameState')", :before=>'findCardState()', :complete => 'process_messages_returned();', :condition => "periodic_update == true")%>
+		<%= hidden_field_tag "cardState",  ""%>
+		<%= hidden_field_tag "gameState",  "waiting_for_other_player_login"%>
+		<%= hidden_field_tag "otherPlayerName",   session[:other_player_name]%>
+		<div id="returnedXML">
+		<%= hidden_field_tag "XML",  ""%>
+		</div>
+		<span class="question">Does your alien have </span><%= text_field_tag 'question', '', :size => "30", :style=>"color: #34A12E; font-family: Helvetica, Arial, sans-serif;font-size:120%"%><span class="question"> ?</span>
+		<%= render :partial => "button", :collection => @buttons%>
+		<div id="cardStateReturned">
+		</div>
+		<input type="reset"><br>
+		<%= submit_tag 'Send Question', :id => "sendQuestion" %><br>
+		<div id="returnedXML"></div>
+		<br>
+		<%= link_to("Flip Cards", "#" , :onclick => "flipcards();") %>
+		<%= link_to_remote("Reset Cards", :update => "cardStateReturned", :url => { :action => "reset_game" }, :complete => "resetCards();changeChosenCard();") %>
+		<%= link_to "Link for player2", {:action => "player2_signin", :session_id => session[:session_id],  :password =>  session[:session_password], :player2_name => session[:other_player_name], :first_turn => session[:first_turn]}%> 
+		
+	    
+	</div>
+	</form>
+	
+	<!-- message_send_area-->
+	<%= form_remote_tag :url => { :action => 'submit_chat' }, :html => {:name => 'form2', :id => 'form2'}, :update => 'returnedXML',:complete => 'process_messages_returned();' %>
+	<div id="message_response_notice_area">
+		<div id="notice">Welcome</div>
+		<%= text_area_tag 'message', '', :size => "37x3", :style=>"font-family: Helvetica, Arial, sans-serif;font-size: 120%"%><br>
+		<div id="responseButtons">
+			<div id="yesButton">
+				<%=link_to_remote("Yes", :update => "returnedXML", :url => { :action => "submit_yes_response"}, :complete => 'process_messages_returned();')%></div>
+			<div id="noButton"><%=link_to_remote("No", :update => "returnedXML", :url => { :action => "submit_no_response" }, :complete => 'process_messages_returned();')%></div>
+		</div>
+		<%= image_submit_tag("../images/chat.png", {:id => "chat_submit"}) %>	
+	</div>
+	</form>
+	
+	 <!-- chat area-->
+	<div id="container">
+	  <div id="wn1">
+	    <div id="lyr1" class="content">
+	    </div>
+	  </div>
+
+	  <div id="scrollbar1">
+	    <div id="up1"><a href="javascript:;" onclick="return false" onmouseover="dw_scrollObj.initScroll('wn1','up')" onmouseout="dw_scrollObj.stopScroll('wn1')" onmousedown="dw_scrollObj.doubleSpeed('wn1')" onmouseup="dw_scrollObj.resetSpeed('wn1')"><img src="images/top.png" width="16" height="18" alt="" style="border: 0 none;"/></a></div>
+	    <div id="track1">
+	      <div id="dragBar1"></div>
+	    </div>
+	    <div id="down1"><a href="javascript:;" onclick="return false" onmouseover="dw_scrollObj.initScroll('wn1','down')" onmouseout="dw_scrollObj.stopScroll('wn1')" onmousedown="dw_scrollObj.doubleSpeed('wn1')" onmouseup="dw_scrollObj.resetSpeed('wn1')"><img src="images/bottom.png" width="16" height="18" alt="" style="border: 0 none;"/></a></div>
+	  </div>
+
+  
+	</div>
+</body>

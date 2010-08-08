@@ -1,0 +1,8 @@
+--- 
+cwd: /var/www/rails/guess_who
+log_file: log/mongrel.log
+port: "8010"
+environment: development
+pid_file: tmp/pids/mongrel.pid
+prefix: /guess_who
+servers: 2
