@@ -9,7 +9,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 11) do
+ActiveRecord::Schema.define(:version => 20100809192529) do
+
+  create_table "games", :force => true do |t|
+    t.string  "password"
+    t.integer "whose_turn"
+  end
 
   create_table "messages", :force => true do |t|
     t.integer "player_id",    :null => false
@@ -25,11 +30,6 @@ ActiveRecord::Schema.define(:version => 11) do
     t.integer  "logged_in"
     t.datetime "updated_at"
     t.integer  "chosen_card"
-  end
-
-  create_table "sessions", :force => true do |t|
-    t.string  "password"
-    t.integer "whose_turn"
   end
 
   create_table "users", :force => true do |t|

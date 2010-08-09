@@ -1,13 +1,25 @@
+# == Schema Information
+#
+# Table name: messages
+#
+#  id           :integer         not null, primary key
+#  player_id    :integer         not null
+#  content      :text
+#  session_id   :integer
+#  message_type :string(255)
+#
+
 class Message < ActiveRecord::Base
   belongs_to :chat
   belongs_to :player
   
-  def self.get_messages(session_id, player_id, last_message_id)
-    messages = find(:all, :conditions => ["session_id = ? and id > ?", session_id, last_message_id], :order => "id DESC")
+  def self.get_messages(game_id, player_id, last_message_id)
+    messages = find(:all, :conditions => ["game_id = ? and id > ?", session_id, last_message_id], :order => "id DESC")
     formatted_content=""
     action="no_action"
     
-    thisPlayer = Player.find(:first, :conditions => ["id = ?", player_id])
+    thisPlayer = Player.find(player_id)
+    otherPlayer = Game.find(game_id).other_player
     player_number = thisPlayer.player_number
     
     messages.each do |message|
@@ -16,29 +28,33 @@ class Message < ActiveRecord::Base
       if message.id > last_message_id
         last_message_id = message.id
       end
-      player = Player.find(:first, :conditions => ["id = ?", message.player_id])
+      if message.player_id == thisPlayer.id
+        message_submitter = thisPlayer
+      else
+        message_submitter = otherPlayer
+      end
       
-      if player.player_number != player_number && message.message_type == "question"
+      if message_submitter != thisPlayer && message.message_type == "question"
         action="wait_for_your_response_and_chat"
-      elsif player.player_number != player_number && message.message_type == "response"
+      elsif message_submitter != thisPlayer && message.message_type == "response"
         action="wait_for_other_player_question_and_chat"
-      elsif player.player_number != player_number && message.message_type == "correct_choice"
+      elsif message_submitter != thisPlayer && message.message_type == "correct_choice"
         action="other_player_correct_choice"
-      elsif player.player_number != player_number && message.message_type == "incorrect_choice"
+      elsif message_submitter != thisPlayer && message.message_type == "incorrect_choice"
         action="other_player_incorrect_choice"
-      elsif player.player_number == player_number && message.message_type == "question"
+      elsif message_submitter == thisPlayer && message.message_type == "question"
         action="wait_for_other_player_response_and_chat"
-      elsif player.player_number == player_number && message.message_type == "response"
+      elsif message_submitter == thisPlayer && message.message_type == "response"
         action="wait_for_your_question_and_chat"
-      elsif player.player_number != player_number && message.content == "Sorry I can't play again now"
+      elsif message_submitter != thisPlayer && message.content == "Sorry I can't play again now"
         action="other_player_cant_play_again"
-      elsif player.player_number != player_number && message.content == "I would like to play again"
+      elsif message_submitter != thisPlayer && message.content == "I would like to play again"
          action="other_player_can_play_again"
       end
       
-      if player.player_number == 1
+      if message_submitter.player_number == 1
         formatted_content +=  "<color>red</color>"
-      elsif player.player_number == 2
+      elsif message_submitter.player_number == 2
         formatted_content +=  "<color>blue</color>"
       end
       formatted_content +=  "<name>" + player.name + "</name>"
@@ -68,3 +84,5 @@ class Message < ActiveRecord::Base
     return message.content
   end
 end
+
+
