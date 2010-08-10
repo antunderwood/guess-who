@@ -13,15 +13,13 @@ class Message < ActiveRecord::Base
   belongs_to :chat
   belongs_to :player
   
-  def self.get_messages(game_id, player_id, last_message_id)
-    messages = find(:all, :conditions => ["game_id = ? and id > ?", session_id, last_message_id], :order => "id DESC")
+  def self.get_messages(game_id, thisPlayer, last_message_id)
+    messages = find(:all, :conditions => ["game_id = ? and id > ?", game_id, last_message_id], :order => "id DESC")
     formatted_content=""
     action="no_action"
     
-    thisPlayer = Player.find(player_id)
-    otherPlayer = Game.find(game_id).other_player
+    otherPlayer = Game.find(game_id).other_player(thisPlayer)
     player_number = thisPlayer.player_number
-    
     messages.each do |message|
       formatted_content +=  "<message>"
       
@@ -57,7 +55,7 @@ class Message < ActiveRecord::Base
       elsif message_submitter.player_number == 2
         formatted_content +=  "<color>blue</color>"
       end
-      formatted_content +=  "<name>" + player.name + "</name>"
+      formatted_content +=  "<name>" + message_submitter.name + "</name>"
       if message.message_type == "chat"
         formatted_content +=  "<img_src>images/chat_small.png</img_src>"
       elsif message.message_type == "question"

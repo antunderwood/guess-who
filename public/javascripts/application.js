@@ -4,7 +4,7 @@ var cards = new Array("A1","B1","C1","D1","E1","F1","A2","B2","C2","D2","E2","F2
 var periodic_update = true;
 
 // functions below 
-soundManager.url = '/guess_who/soundmanager2.swf'; // override default SWF url
+soundManager.url = '/soundmanager2.swf'; // override default SWF url
 soundManager.debugMode = false;
 soundManager.onload = function(){}
 
@@ -70,7 +70,7 @@ function findCardState(){
 	}
 	if (cardsRemainingCount == 1 && document.getElementById('TB_overlay') == null){
 		update_off();
-		TB_show("","guess_who/last_card?width=400&height=300&last_card=" + cardsRemaining[0], false );
+		TB_show("","/last_card?width=400&height=300&last_card=" + cardsRemaining[0], false );
 		document.getElementById('TB_overlay').style.height = window.innerHeight + "px";
 	}
 
@@ -158,7 +158,7 @@ function dw_showLayers() {
 
 function processXML(){
 	var xmlstring = document.form1.XML.value;
-/*	alert(xmlstring);*/
+  // alert(xmlstring);
 	var xmlobject = (new DOMParser()).parseFromString(xmlstring, "text/xml");
 	var htmlString="";
 	var numMessages=xmlobject.getElementsByTagName("message").length;
@@ -173,17 +173,12 @@ function processXML(){
 			htmlString += "<div class=\"cssbox-blue\">\n<div class=\"cssbox_head-blue\"><h2>" + name + "&nbsp;<img src=\"" + img_src+ "\"/></h2></div>\n<div class=\"cssbox_body-blue\">" + content + "</div>\n</div>"	
 		}
 	}
-/*	alert(htmlString);*/
 	insertAtTop("lyr1", htmlString);
 	if (numMessages>0){
-		soundManager.play('message','/guess_who/message.mp3');
+		soundManager.play('message','/message.mp3');
 	}
 	var action = xmlobject.getElementsByTagName("action")[0].firstChild.nodeValue;
-	//alert(action);
-	document.getElementById('gameState').value=action;
-	if (xmlobject.getElementsByTagName("last_message_id").length > 0){
-		var last_message_id = xmlobject.getElementsByTagName("last_message_id")[0].firstChild.nodeValue;
-	}
+	return action;
 /*	alert(last_message_id);*/
 
 	
@@ -196,69 +191,69 @@ function insertAtTop(id, htmlString){
 	element.insertBefore(parsedHTML,element.firstChild);
 }
 function process_messages_returned(){
-	processXML();
+	action = processXML();
+	document.getElementById('gameState').value=action;
 	initScrollLayers();
-	performActions();
+	performActions(action);
 }
 function add_text(el){
 	var text = el.innerHTML;
 	document.form1.question.value = document.form1.question.value + text + " ";
 }
-function performActions(){
-	var gameState=document.getElementById('gameState').value;
-	if (gameState == "wait_for_your_response"){
+function performActions(action){
+	if (action == "wait_for_your_response"){
 		deactivateQuestionButtons();
 		activateResponseButtons();
 		document.getElementById('notice').innerHTML="Waiting for your answer";
 		new Effect.Highlight('notice', {startcolor:'#CC0000', endcolor:'#FFF6BF',duration:2.0});
 	}
-	else if (gameState == "wait_for_your_question"){
+	else if (action == "wait_for_your_question"){
 		activateQuestionButtons();
 		deactivateResponseButtons();
 		document.getElementById('notice').innerHTML="Waiting for your question";
 		new Effect.Highlight('notice', {startcolor:'#CC0000', endcolor:'#FFF6BF',duration:2.0});
 	}
-	else if (gameState == "wait_for_other_player_question"){
+	else if (action == "wait_for_other_player_question"){
 		deactivateQuestionButtons();
 		deactivateResponseButtons();
 		document.getElementById('notice').innerHTML="Waiting for " + document.getElementById('otherPlayerName').value + "'s question";
 		new Effect.Highlight('notice', {startcolor:'#CC0000', endcolor:'#FFF6BF',duration:2.0});
 	}
-	else if (gameState == "wait_for_other_player_response"){
+	else if (action == "wait_for_other_player_response"){
 		deactivateQuestionButtons();
 		deactivateResponseButtons();
 		document.getElementById('notice').innerHTML="Waiting for " + document.getElementById('otherPlayerName').value + "'s answer";
 		new Effect.Highlight('notice', {startcolor:'#CC0000', endcolor:'#FFF6BF',duration:2.0});
 	}
-	else if (gameState == "wait_for_your_question_and_chat"){
+	else if (action == "wait_for_your_question_and_chat"){
 		activateQuestionButtons();
 		deactivateResponseButtons();
 		activateChatButton();
 		document.getElementById('notice').innerHTML="Waiting for your question";
 		new Effect.Highlight('notice', {startcolor:'#CC0000', endcolor:'#FFF6BF',duration:2.0});
 	}
-	else if (gameState == "wait_for_other_player_question_and_chat"){
+	else if (action == "wait_for_other_player_question_and_chat"){
 		deactivateQuestionButtons();
 		deactivateResponseButtons();
 		activateChatButton();
 		document.getElementById('notice').innerHTML="Waiting for " + document.getElementById('otherPlayerName').value + "'s question";
 		new Effect.Highlight('notice', {startcolor:'#CC0000', endcolor:'#FFF6BF',duration:2.0});
 	}
-	else if (gameState == "wait_for_your_response_and_chat"){
+	else if (action == "wait_for_your_response_and_chat"){
 		deactivateQuestionButtons();
 		activateResponseButtons();
 		activateChatButton();
 		document.getElementById('notice').innerHTML="Waiting for your answer";
 		new Effect.Highlight('notice', {startcolor:'#CC0000', endcolor:'#FFF6BF',duration:2.0});
 	}
-	else if (gameState == "wait_for_other_player_response_and_chat"){
+	else if (action == "wait_for_other_player_response_and_chat"){
 		deactivateQuestionButtons();
 		deactivateResponseButtons();
 		activateChatButton();
 		document.getElementById('notice').innerHTML="Waiting for " + document.getElementById('otherPlayerName').value + "'s answer";
 		new Effect.Highlight('notice', {startcolor:'#CC0000', endcolor:'#FFF6BF',duration:2.0});
 	}
-	else if (gameState == "correct_choice"){
+	else if (action == "correct_choice"){
 		deactivateQuestionButtons();
 		deactivateResponseButtons();
 		activateChatButton();
@@ -268,7 +263,7 @@ function performActions(){
 		setTimeout('TB_show("","guess_who/display_winner?width=400&height=150&result=correct_choice", false )', 250);
 		document.getElementById('TB_overlay').style.height = window.innerHeight + "px";
 	}
-	else if (gameState == "incorrect_choice"){
+	else if (action == "incorrect_choice"){
 		deactivateQuestionButtons();
 		deactivateResponseButtons();
 		activateChatButton();
@@ -278,7 +273,7 @@ function performActions(){
 		setTimeout('TB_show("","guess_who/display_winner?width=400&height=150&result=incorrect_choice", false )', 250);
 		document.getElementById('TB_overlay').style.height = window.innerHeight + "px";
 	}
-	else if (gameState == "other_player_correct_choice"){
+	else if (action == "other_player_correct_choice"){
 		update_off();
 		deactivateQuestionButtons();
 		deactivateResponseButtons();
@@ -288,7 +283,7 @@ function performActions(){
 		TB_show("","guess_who/display_winner?width=400&height=250&result=other_player_correct_choice", false );
 		document.getElementById('TB_overlay').style.height = window.innerHeight + "px";
 	}
-	else if (gameState == "other_player_incorrect_choice"){
+	else if (action == "other_player_incorrect_choice"){
 		update_off();
 		deactivateQuestionButtons();
 		deactivateResponseButtons();
@@ -337,11 +332,11 @@ function activateResponseButtons(){
 	var no = document.getElementById('noButton');
 	yes.style.background = "url(\"images/yes_button.png\")";
 	yes.style.border= "2px solid #313131";
-	yes.getElementsByTagName('a')[0].onclick=function(){new Ajax.Updater('returnedXML', '/guess_who/guess_who/submit_yes_response', {asynchronous:true, evalScripts:true, onComplete:function(request){process_messages_returned();}}); return false;};
+	yes.getElementsByTagName('a')[0].onclick=function(){new Ajax.Updater('returnedXML', '/guess_who/submit_yes_response', {asynchronous:true, evalScripts:true, onComplete:function(request){process_messages_returned();}}); return false;};
 	
 	no.style.background = "url(\"images/no_button.png\")";
 	no.style.border = "2px solid #313131";
-	no.getElementsByTagName('a')[0].onclick=function(){new Ajax.Updater('returnedXML', '/guess_who/guess_who/submit_no_response', {asynchronous:true, evalScripts:true, onComplete:function(request){process_messages_returned();}}); return false;};
+	no.getElementsByTagName('a')[0].onclick=function(){new Ajax.Updater('returnedXML', '/guess_who/submit_no_response', {asynchronous:true, evalScripts:true, onComplete:function(request){process_messages_returned();}}); return false;};
 }
 function deactivateChatButton(){
 	var chat = document.getElementById('chat_submit');

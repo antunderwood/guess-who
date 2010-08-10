@@ -28,7 +28,7 @@
 		<br>
 		<%= link_to("Flip Cards", "#" , :onclick => "flipcards();") %>
 		<%= link_to_remote("Reset Cards", :update => "cardStateReturned", :url => { :action => "reset_game" }, :complete => "resetCards();changeChosenCard();") %>
-		<%= link_to "Link for player2", {:action => "player2_signin", :session_id => session[:session_id],  :password =>  session[:session_password], :player2_name => session[:other_player_name], :first_turn => session[:first_turn]}%> 
+		<%= link_to "Link for player2", {:action => "player2_signin", :game_id => session[:game_id],  :game_password =>  session[:game_password], :player2_name => session[:other_player_name], :first_turn => session[:first_turn]}%> 
 		
 	    
 	</div>
