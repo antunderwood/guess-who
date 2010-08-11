@@ -6,6 +6,7 @@ else
 end
 if @card_choice == card
   @subtract_flag = 1
+  return
 end
 -%>
 <div class="card" id="div-<%=card%>" style="position: absolute; top: <%=80 + (row_pos*123)%>px;left:<%= 30+(column_pos*90)%>px;" onclick="new Effect.Scale('div-<%=card%>', 0,{ scaleX:false,scaleY:true,scaleFromCenter:true,scaleMode: { originalHeight: 100, originalWidth: 77 },duration:0.25});DivToggle('name_div-<%=card%>');setTimeout(function(){ImageToggle('image-<%=card%>','images/<%=card%>.png','images/eliminated.png');},250);setTimeout(function(){ new Effect.Scale('div-<%=card%>', 100000,{ scaleX:false,scaleY:true,scaleFromCenter:true,scaleMode: { originalHeight: 0.1, originalWidth: 77 },duration:0.25,scaleFrom:0});},260);"><%= image_tag(card+".png", :size=>'77x100', :id=>'image-'+card) %><br></div>

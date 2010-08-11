@@ -46,6 +46,7 @@ class GuessWhoController < ApplicationController
     @card_choice = @columns[player.chosen_card]
     @subtract_flag = 0
     @buttons = ["a", "head","mouth","eye","eyes","nose","eyes on stalks","skin","one","two","three","blue","green","orange","spotty","squiggly","circular","oval","triangular","happy","sad"]
+    @display_link_for_player2 = true if params[:display_link_for_player2]
   end
   def cardstate
     render :text=>params[:cardState]
@@ -115,7 +116,7 @@ class GuessWhoController < ApplicationController
         if session[:intended_controller] == nil
           session[:intended_controller] = "guess_who"
         end
-        redirect_to :action => session[:intended_action], :controller => session[:intended_controller]
+        redirect_to :action => session[:intended_action], :controller => session[:intended_controller], :display_link_for_player2 => 1
         return
       end
       flash[:notice] = "Username or password invalid"
@@ -146,7 +147,7 @@ class GuessWhoController < ApplicationController
         session[:first_turn] = game.whose_turn
         session[:last_message_id]=0
 
-        otherPlayer = Player.find(:first, :conditions => ["game_id = ? and id != ?", game.id, player.id])
+        otherPlayer = game.other_player(player)
         session[:other_player_name] = otherPlayer.name
 
         otherPlayerChosenCard = otherPlayer.chosen_card

@@ -77,8 +77,8 @@ class Message < ActiveRecord::Base
     return [formatted_content, action, last_message_id]
   end
   
-  def self.get_last_choice(session_id)
-    message = find(:first, :conditions => ["session_id = ? and message_type LIKE ?", session_id, "%choice"], :order=>"id DESC")
+  def self.get_last_choice(game_id)
+    message = find(:first, :conditions => ["game_id = ? and message_type LIKE ?", game_id, "%choice"], :order=>"id DESC")
     return message.content
   end
 end

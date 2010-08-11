@@ -70,7 +70,7 @@ function findCardState(){
 	}
 	if (cardsRemainingCount == 1 && document.getElementById('TB_overlay') == null){
 		update_off();
-		TB_show("","/last_card?width=400&height=300&last_card=" + cardsRemaining[0], false );
+		TB_show("","/guess_who/last_card?width=400&height=300&last_card=" + cardsRemaining[0], false );
 		document.getElementById('TB_overlay').style.height = window.innerHeight + "px";
 	}
 
@@ -85,15 +85,19 @@ function flipcards(){
 		for (j=0; j < 6; j++){
 			var image_id = "image-" + Columns[j] + i.toString();
 			var image_src = "images/" + Columns[j] + i.toString() + ".png";
-			var image_src_regular_expression = new RegExp(image_src)
+			var image_src_regular_expression = new RegExp(image_src);
+			
 			if (document.getElementById(image_id).src.match(image_src_regular_expression)){
 				if (!document.getElementById(image_id).src.match(chosenCard_src_regular_expression)){
 					document.getElementById(image_id).src = "images/eliminated.png";
+					DivToggle('name_div-' + Columns[j] + i.toString());
 				}
 			}
 			else {
 				document.getElementById(image_id).src = image_src;
+				DivToggle('name_div-' + Columns[j] + i.toString());
 			}
+			
 		}
 	}
 }
