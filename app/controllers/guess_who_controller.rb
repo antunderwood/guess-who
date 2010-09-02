@@ -42,8 +42,11 @@ class GuessWhoController < ApplicationController
     # @columns =[["A","B","C","D","E","F"],["A","B","C","D","E","F"],["A","B","C","D","E","F"],["A","B","C","D","E","F"]]
     @columns = @@columns
     @name_hash = @@name_hash
-    player = Player.find(:first, :conditions => ["game_id = ? and id = ?", session[:game_id], session[:player_id]])
-    @card_choice = @columns[player.chosen_card]
+    @player = Player.find(:first, :conditions => ["game_id = ? and id = ?", session[:game_id], session[:player_id]])
+    @card_choice = @columns[@player.chosen_card]
+    game = Game.find(session[:game_id])
+    @otherPlayer = game.other_player(@player)
+    @gameState = "waiting_for_other_player_login" unless @otherPlayer.logged_in == 1
     @subtract_flag = 0
     @buttons = ["a", "head","mouth","eye","eyes","nose","eyes on stalks","skin","one","two","three","blue","green","orange","spotty","squiggly","circular","oval","triangular","happy","sad"]
     @display_link_for_player2 = true if params[:display_link_for_player2]

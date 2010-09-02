@@ -14,10 +14,26 @@ class Message < ActiveRecord::Base
   belongs_to :player
   
   def self.get_messages(game_id, thisPlayer, last_message_id)
-    messages = find(:all, :conditions => ["game_id = ? and id > ?", game_id, last_message_id], :order => "id DESC")
+    messages = Message.find(:all, :conditions => ["game_id = ? and id > ?", game_id, last_message_id], :order => "id DESC")
+    action = ""
+    if messages.empty?
+      last_question_or_response = Message.find(:first, :conditions => ["game_id = ? AND message_type == ? OR message_type = ?", game_id, 'question', 'response'], :order => "id DESC")
+      if last_question_or_response.nil?
+        action="no_action"
+      else
+        if last_question_or_response.player != thisPlayer && last_question_or_response.message_type == "question"
+          action="wait_for_your_response_and_chat"
+        elsif last_question_or_response.player != thisPlayer && last_question_or_response.message_type == "response"
+          action="wait_for_other_player_question_and_chat"
+        elsif last_question_or_response.player == thisPlayer && last_question_or_response.message_type == "question"
+          action="wait_for_other_player_response_and_chat"
+        elsif last_question_or_response.player == thisPlayer && last_question_or_response.message_type == "response"
+          action="wait_for_your_question_and_chat"
+        end
+      end
+    end
+        
     formatted_content=""
-    action="no_action"
-    
     otherPlayer = Game.find(game_id).other_player(thisPlayer)
     player_number = thisPlayer.player_number
     messages.each do |message|

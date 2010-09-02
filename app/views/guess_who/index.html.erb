@@ -13,7 +13,7 @@
 		<!-- make periodic call -->
 		<%= periodically_call_remote(:update => 'returnedXML',:frequency => 5, :url => { :action => 'periodic_update'}, :with => "'cardState='+$F('cardState')+'&gameState='+$F('gameState')", :before=>'findCardState()', :complete => 'process_messages_returned();', :condition => "periodic_update == true")%>
 		<%= hidden_field_tag "cardState",  ""%>
-		<%= hidden_field_tag "gameState",  "waiting_for_other_player_login"%>
+		<%= hidden_field_tag "gameState",  @gameState %>
 		<%= hidden_field_tag "otherPlayerName",   session[:other_player_name]%>
 		<div id="returnedXML">
 		<%= hidden_field_tag "XML",  ""%>
@@ -38,7 +38,7 @@
 	<%= form_remote_tag :url => { :action => 'submit_chat' }, :html => {:name => 'form2', :id => 'form2'}, :update => 'returnedXML',:complete => 'process_messages_returned();' %>
 	<div id="message_response_notice_area">
 		<div id="notice">Welcome</div>
-		<%= text_area_tag 'message', '', :size => "37x3", :style=>"font-family: Helvetica, Arial, sans-serif;font-size: 120%"%><br>
+		<%= text_area_tag "message", "", :size => "37x3", :style=>"font-family: Helvetica, Arial, sans-serif;font-size: 120%"%><br>
 		<div id="responseButtons">
 			<div id="yesButton">
 				<%=link_to_remote("Yes", :update => "returnedXML", :url => { :action => "submit_yes_response"}, :complete => 'process_messages_returned();')%></div>
